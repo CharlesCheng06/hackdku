@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清食 | 发现更健康的食物选择</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #fd7e14;
+            --text-color: #212529;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #f9ab00;
+            --danger-color: #d93025;
+            --border-radius: 12px;
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-color);
+            background-color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        header {
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 64px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: var(--dark-gray);
+            max-width: 680px;
+            margin: 0 auto 40px;
+        }
+        
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 24px;
+        }
+        
+        .search-container label {
+            display: block;
+            font-weight: 500;
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: var(--text-color);
+            text-align: left;
+        }
+        
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        #foodInput {
+            flex: 1;
+            height: 56px;
+            padding: 0 16px;
+            font-size: 16px;
+            border: 2px solid var(--medium-gray);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            outline: none;
+            font-family: inherit;
+        }
+        
+        #foodInput:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.2);
+        }
+
+        #foodImageInput {
+            display: none;
+        }
+
+        #uploadBtn {
+            height: 56px;
+            padding: 0 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #uploadBtn:hover {
+            background-color: #e66a00;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #uploadBtn:active {
+             background-color: #cc5c00;
+        }
+
+        #analyzeBtn {
+            width: auto;
+            min-width: 120px;
+            height: 56px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        #analyzeBtn:hover {
+            background-color: #0b5ed7;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #analyzeBtn:active {
+            background-color: #0957c3;
+        }
+
+        #fileNameDisplay {
+            font-size: 14px;
+            color: var(--dark-gray);
+            margin-top: 8px;
+            text-align: left;
+            height: 1.5em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            color: var(--dark-gray);
+            font-size: 16px;
+            display: none;
+        }
+        .loading i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .error-message {
+            background-color: #fce8e6;
+            color: var(--danger-color);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            margin-top: 16px;
+            text-align: center;
+            font-size: 16px;
+            display: none;
+        }
+        
+        .results-section {
+            max-width: 680px;
+            margin: 40px auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 32px;
+            display: none;
+        }
+        .results-section h2 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 700;
+        }
+        .result-card {
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            display: flex;
+            gap: 24px;
+        }
+        .rating-icon {
+            font-size: 3em;
+            flex-shrink: 0;
+            width: 60px;
+            text-align: center;
+        }
+        .rating-icon.high-risk i { color: var(--danger-color); }
+        .rating-icon.medium-risk i { color: var(--warning-color); }
+        .rating-icon.low-risk i { color: var(--success-color); }
+        .rating-icon.unknown i { color: var(--dark-gray); }
+
+        .result-content { flex-grow: 1; }
+        .result-content .food-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .result-content .reason {
+            margin-bottom: 24px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        #suggestionsArea h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--medium-gray);
+        }
+        #suggestionList {
+            list-style: none;
+        }
+        #suggestionList li {
+            background-color: #e8f0fe;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #174ea6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        #suggestionList li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 12px;
+            margin: 40px auto;
+            max-width: 800px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            justify-content: center;
+        }
+        .category-filters::-webkit-scrollbar { display: none; }
+        .category-btn {
+            white-space: nowrap;
+            padding: 8px 16px;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 64px;
+        }
+        .comparison-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            background-color: white;
+        }
+        .comparison-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        }
+        .comparison-header { padding: 16px; border-bottom: 1px solid var(--medium-gray); display: flex; justify-content: space-between; align-items: center; }
+        .card-title { font-weight: 600; font-size: 16px; }
+        .save-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--medium-gray); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); }
+        .save-btn:hover { background-color: var(--light-gray); }
+        .comparison-content { display: flex; }
+        .food-item { flex: 1; padding: 16px; position: relative; }
+        .food-item:first-child { border-right: 1px solid var(--medium-gray); }
+        .food-img { width: 100%; height: 160px; object-fit: cover; border-radius: var(--border-radius); margin-bottom: 12px; }
+        .food-info h3 { font-size: 14px; margin-bottom: 4px; }
+        .calorie-tag { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; margin-top: 8px; }
+        .high-calorie { background-color: #ffeceb; color: #e53935; }
+        .low-calorie { background-color: #e8f5e9; color: var(--success-color); }
+        .vs-badge { position: absolute; top: 76px; right: -16px; width: 32px; height: 32px; background-color: var(--secondary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; z-index: 1; }
+
+        footer { background-color: var(--light-gray); padding: 64px 0 32px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-column h3 { font-size: 16px; margin-bottom: 16px; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 12px; }
+        .footer-column a { text-decoration: none; color: var(--dark-gray); transition: var(--transition); }
+        .footer-column a:hover { color: var(--primary-color); }
+        .copyright { text-align: center; color: var(--dark-gray); font-size: 14px; padding-top: 32px; border-top: 1px solid var(--medium-gray); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 18px; }
+            .search-form { flex-wrap: wrap; }
+            #foodInput { min-width: 100%; order: 1; margin-bottom: 12px;}
+            #uploadBtn { flex-grow: 1; order: 2; }
+            #analyzeBtn { flex-grow: 1; order: 3; }
+            #fileNameDisplay { order: 4; width: 100%; text-align: center; margin-top: 0;}
+            .result-card { flex-direction: column; gap: 16px; }
+            .rating-icon { text-align: center; }
+            .food-grid { grid-template-columns: 1fr; }
+            nav ul { display: none; }
+        }
+
+        /* --- Modal 样式 --- */
+        .modal {
+            position: fixed; /* 固定定位，覆盖整个视口 */
+            z-index: 1000; /* 确保在最上层 */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* 如果内容过多，允许滚动 */
+            background-color: rgba(0,0,0,0.6); /* 半透明黑色背景 */
+            display: none; /* 默认隐藏，由 JS 控制为 flex */
+            /* display: flex; */ /* 使用 flex 居中内容 */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: auto; /* 自动外边距实现水平垂直居中 */
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%; /* 响应式宽度 */
+            max-width: 600px; /* 最大宽度 */
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            animation: fadeIn 0.3s ease-out; /* 简单的淡入动画 */
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .modal-close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-close-btn:hover,
+        .modal-close-btn:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        #modalBody h4 { /* 模态框内的标题样式 */
+             color: var(--secondary-color);
+             margin-top: 15px;
+             margin-bottom: 5px;
+        }
+        #modalBody p, #modalBody ul { /* 模态框内的文本样式 */
+             font-size: 14px;
+             color: var(--text-color);
+             line-height: 1.7;
+        }
+         #modalBody ul {
+            padding-left: 20px;
+            margin-top: 5px;
+         }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🥗</span>
+                    清食 | 发现更健康的食物选择
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">避坑攻略</a></li>
+                        <li><a href="#">健康替代</a></li>
+                        <li><a href="#">关于我们</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>发现更健康的食物选择</h1>
+                <p>AI驱动的饮食"避坑"与"智换"助手，帮你减少热量摄入，保持健康生活方式</p>
+                
+                <div class="search-container">
+                    <label for="foodInput">输入食物描述或上传图片进行分析：</label>
+                    <div class="search-form">
+                        <input type="text" id="foodInput" placeholder="例如：鱼香肉丝、麻婆豆腐...">
+                        <input type="file" id="foodImageInput" accept="image/*">
+                        <button id="uploadBtn"><i class="fas fa-camera"></i> 上传图片</button>
+                        <button id="analyzeBtn">智能分析</button>
+                    </div>
+                    <div id="fileNameDisplay"></div>
+
+                    <!-- 新增：用于显示后端分析结果的文本框/区域 -->
+                    <div id="analysisOutput" class="analysis-output-container" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; text-align: left;">
+                        <!-- 分析结果将显示在这里 -->
+                    </div>
+
+                    <div id="loadingIndicator" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> 正在召唤懂王AI，请稍候...
+                    </div>
+                    <div id="errorMsg" class="error-message"></div>
+                </div>
+                
+                <div class="category-filters">
+                     <button class="category-btn active">全部</button>
+                    <button class="category-btn">早餐</button>
+                    <button class="category-btn">午餐</button>
+                    <button class="category-btn">晚餐</button>
+                    <button class="category-btn">主食</button>
+                    <button class="category-btn">小吃</button>
+                    <button class="category-btn">饮料</button>
+                    <button class="category-btn">甜点</button>
+                    <button class="category-btn">传统美食</button>
+                </div>
+            </div>
+        </section>
+        
+        <div id="resultsSection" class="results-section">
+            <h2>AI 分析结果：</h2>
+            <div class="result-card">
+                <div id="ratingIcon" class="rating-icon unknown">
+                     <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="result-content">
+                    <div id="foodNameDisplay" class="food-name">食物名称将显示在这里</div>
+                    <p id="ratingReason" class="reason">AI 分析的详细原因将显示在这里。</p>
+                    <div id="suggestionsArea">
+                        <h3>更健康的姿势：</h3>
+                        <ul id="suggestionList">
+                            <li>健康建议将显示在这里。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <section class="container">
+            <div class="food-grid">
+                <!-- 对比卡片1：油条豆浆 - 删除此卡片 -->
+                <!-- 
+                <div class="comparison-card">
+                    ...
+                </div> 
+                -->
+                
+                <!-- 对比卡片2：北京烤鸭 - 删除此卡片 -->
+                <!-- 
+                <div class="comparison-card">
+                    ...
+                </div> 
+                -->
+                
+                <!-- 对比卡片3：炸酱面 -->
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <span class="card-title">炸酱面 vs 健康替代</span>
+                        <button class="save-btn">❤️</button>
+                    </div>
+                    <div class="comparison-content">
+                        <div class="food-item">
+                            <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="传统炸酱面" class="food-img">
+                            <div class="food-info">
+                                <h3>传统炸酱面</h3>
+                                <p>大量肉酱，高脂高盐</p>
+                                <span class="calorie-tag high-calorie">580 卡路里</span>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                        </div>
+                        <div class="food-item">
+                            <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="健康版炸酱面" class="food-img">
+                            <div class="food-info">
+                                <h3>蔬菜豆腐炸酱面</h3>
+                                <p>豆腐代替部分肉，多蔬菜</p>
+                                <span class="calorie-tag low-calorie">380 卡路里</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 对比卡片4：宫保鸡丁 -->
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <span class="card-title">宫保鸡丁 vs 健康替代</span>
+                        <button class="save-btn">🤍</button> <!-- 默认未收藏状态 -->
+                    </div>
+                    <div class="comparison-content">
+                        <div class="food-item">
+                            <!-- 注意: 路径已改为 images/ -->
+                            <img src="images/traditional_kungpao_chicken.jpeg" alt="传统宫保鸡丁" class="food-img">
+                            <div class="food-info">
+                                <h3>传统宫保鸡丁</h3>
+                                <p>油炸/大量油炒，高热量高脂肪</p>
+                                <span class="calorie-tag high-calorie">197-268 大卡/100克</span>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                        </div>
+                        <div class="food-item">
+                            <img src="images/healthy_kungpao_chicken.jpeg" alt="健康宫保鸡丁" class="food-img">
+                            <div class="food-info">
+                                <h3>健康版宫保鸡丁</h3>
+                                <p>少油/空气炒，加蔬菜，低热量</p>
+                                <span class="calorie-tag low-calorie">96-109 大卡/100克</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 添加详情按钮和内容区域 -->
+                    <div class="card-actions" style="padding: 0 16px 16px; text-align: right;">
+                        <button class="details-btn" style="padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; border: 1px solid var(--medium-gray); background: white;">查看详情</button>
+                    </div>
+                    <!-- 这个区域现在只用于存储数据，不再由按钮直接控制显示 -->
+                    <div class="details-content" style="display: none;"> 
+                        <h4>传统做法简述:</h4>
+                        <p style="font-size: 13px; color: var(--dark-gray);">鸡腿肉油炸，大量油爆香干辣椒后与鸡肉、花生米翻炒。</p>
+                        <h4>健康改良要点:</h4>
+                        <ul style="font-size: 13px; color: var(--dark-gray); padding-left: 18px;">
+                            <li><strong>食材替换</strong>：鸡胸肉替代鸡腿肉</li>
+                            <li><strong>增加蔬菜</strong>：加入黄瓜、胡萝卜</li>
+                            <li><strong>减少油脂</strong>：不粘锅少油或无油空气炒</li>
+                            <li><strong>调味改良</strong>：蜂蜜替代糖，减盐减酱油</li>
+                            <li><strong>控制配料</strong>：减少花生米</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 对比卡片5：回锅肉 -->
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <span class="card-title">回锅肉 vs 健康替代</span>
+                        <button class="save-btn">🤍</button> <!-- 默认未收藏状态 -->
+                    </div>
+                    <div class="comparison-content">
+                        <div class="food-item">
+                             <!-- 注意: 路径已改为 images/ -->
+                            <img src="images/traditional_huiguorou.jpeg" alt="传统回锅肉" class="food-img">
+                            <div class="food-info">
+                                <h3>传统回锅肉</h3>
+                                <p>五花肉+猪油炒，高油高热量</p>
+                                <span class="calorie-tag high-calorie">415 大卡/100克</span>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                        </div>
+                        <div class="food-item">
+                            <img src="images/healthy_huiguorou.jpeg" alt="健康回锅肉" class="food-img">
+                            <div class="food-info">
+                                <h3>健康版回锅肉</h3>
+                                <p>猪肩肉+少油焖煮，加蔬菜</p>
+                                <span class="calorie-tag low-calorie">约200-250 大卡/100克</span>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- 添加详情按钮和内容区域 -->
+                    <div class="card-actions" style="padding: 0 16px 16px; text-align: right;">
+                        <button class="details-btn" style="padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; border: 1px solid var(--medium-gray); background: white;">查看详情</button>
+                    </div>
+                     <!-- 这个区域现在只用于存储数据，不再由按钮直接控制显示 -->
+                    <div class="details-content" style="display: none;">
+                        <h4>传统做法简述:</h4>
+                        <p style="font-size: 13px; color: var(--dark-gray);">五花肉煮熟切片，猪油爆香豆瓣酱后大火爆炒肉片至出油，加蒜苗。</p>
+                        <h4>健康改良要点:</h4>
+                        <ul style="font-size: 13px; color: var(--dark-gray); padding-left: 18px;">
+                            <li><strong>肉类替换</strong>：猪肩肉替代五花肉</li>
+                            <li><strong>增加蔬菜</strong>：加入甜椒</li>
+                            <li><strong>减少油脂</strong>：少油煸炒+焖煮</li>
+                            <li><strong>调味控制</strong>：减少豆瓣酱/甜面酱</li>
+                            <li><strong>烹饪技巧</strong>：中小火烹饪</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+         <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>清食</h3>
+                    <ul>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">我们的使命</a></li>
+                        <li><a href="#">加入我们</a></li>
+                        <li><a href="#">联系方式</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>发现</h3>
+                    <ul>
+                        <li><a href="#">食品目录</a></li>
+                        <li><a href="#">热门替代品</a></li>
+                        <li><a href="#">季节性指南</a></li>
+                        <li><a href="#">食谱灵感</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>社区</h3>
+                    <ul>
+                        <li><a href="#">健康博客</a></li>
+                        <li><a href="#">论坛</a></li>
+                        <li><a href="#">专家观点</a></li>
+                        <li><a href="#">成功故事</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>法律</h3>
+                    <ul>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">使用条款</a></li>
+                        <li><a href="#">Cookie政策</a></li>
+                        <li><a href="#">版权信息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 清食 - 发现更健康的食物选择。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 通用详情模态窗口 -->
+    <div id="detailsModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="modal-close-btn">&times;</span>
+        <h3 id="modalTitle" style="margin-top: 0; color: var(--primary-color);">详细信息</h3>
+        <div id="modalBody">
+          <!-- 详细内容将通过 JS 填充到这里 -->
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

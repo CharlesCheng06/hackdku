@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中餐健康替代菜谱对比</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #d32f2f;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #d32f2f;
+            margin-top: 40px;
+            border-left: 5px solid #d32f2f;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #4caf50;
+            margin-top: 30px;
+        }
+        .comparison-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        .dish-card {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: white;
+            transition: transform 0.3s ease;
+        }
+        .dish-card:hover {
+            transform: translateY(-5px);
+        }
+        .traditional {
+            border-top: 5px solid #d32f2f;
+        }
+        .healthy {
+            border-top: 5px solid #4caf50;
+        }
+        .dish-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .dish-info {
+            padding: 20px;
+        }
+        .dish-title {
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .traditional .dish-title {
+            color: #d32f2f;
+        }
+        .healthy .dish-title {
+            color: #4caf50;
+        }
+        .calorie-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .traditional .calorie-badge {
+            background-color: #ffcdd2;
+            color: #d32f2f;
+        }
+        .healthy .calorie-badge {
+            background-color: #c8e6c9;
+            color: #4caf50;
+        }
+        .nutrition-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .nutrition-table th, .nutrition-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .nutrition-table th {
+            background-color: #f2f2f2;
+        }
+        .ingredients {
+            margin-top: 15px;
+        }
+        .ingredients h4 {
+            margin-bottom: 5px;
+        }
+        .ingredients ul {
+            margin-top: 0;
+            padding-left: 20px;
+        }
+        .cooking-method {
+            margin-top: 15px;
+        }
+        .cooking-method h4 {
+            margin-bottom: 5px;
+        }
+        .cooking-method ol {
+            margin-top: 0;
+            padding-left: 20px;
+        }
+        .comparison-chart {
+            width: 100%;
+            margin: 40px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tips-section {
+            background-color: #fff8e1;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tips-section h3 {
+            color: #ff8f00;
+            margin-top: 0;
+        }
+        .tips-section ul {
+            padding-left: 20px;
+        }
+        .conclusion {
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .conclusion h2 {
+            color: #4caf50;
+            border-left: 5px solid #4caf50;
+        }
+        .calorie-comparison {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .calorie-bar {
+            height: 30px;
+            border-radius: 15px;
+            position: relative;
+            margin: 10px 0;
+        }
+        .traditional-bar {
+            background-color: #d32f2f;
+            width: 100%;
+        }
+        .healthy-bar {
+            background-color: #4caf50;
+            width: 50%;
+        }
+        .calorie-label {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>中餐健康替代菜谱对比</h1>
+    
+    <p>本文档对比了典型的高油高盐高卡路里中餐菜品与其健康替代版本，通过图片、卡路里数据和烹饪方法的对比，直观展示两者之间的差异，帮助读者在享受美味中餐的同时，做出更健康的饮食选择。</p>
+    
+    <h2>宫保鸡丁对比</h2>
+    
+    <div class="comparison-container">
+        <div class="dish-card traditional">
+            <img src="../traditional_kungpao_chicken.jpeg" alt="传统版宫保鸡丁" class="dish-image">
+            <div class="dish-info">
+                <h3 class="dish-title">传统版宫保鸡丁</h3>
+                <div class="calorie-badge">197-268 大卡/100克</div>
+                <p>传统宫保鸡丁以鸡腿肉为主料，配以花生米和干辣椒，经过油炸和大量油炒制而成。色泽红亮，油光发亮，口感香辣鲜美，但热量和脂肪含量较高。</p>
+                
+                <div class="ingredients">
+                    <h4>主要食材：</h4>
+                    <ul>
+                        <li>鸡腿肉</li>
+                        <li>花生米</li>
+                        <li>干辣椒</li>
+                        <li>大量食用油</li>
+                    </ul>
+                </div>
+                
+                <div class="cooking-method">
+                    <h4>烹饪方法：</h4>
+                    <ol>
+                        <li>鸡腿肉切丁，油炸至金黄</li>
+                        <li>大量油爆香干辣椒</li>
+                        <li>加入调味料和鸡肉翻炒</li>
+                        <li>最后加入花生米即可</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dish-card healthy">
+            <img src="../healthy_kungpao_chicken.jpeg" alt="健康低卡版宫保鸡丁" class="dish-image">
+            <div class="dish-info">
+                <h3 class="dish-title">健康低卡版宫保鸡丁</h3>
+                <div class="calorie-badge">96-109 大卡/100克</div>
+                <p>健康版宫保鸡丁使用鸡胸肉替代鸡腿肉，增加了蔬菜比例，减少油脂使用，采用不粘锅少油烹饪，保留了宫保鸡丁的风味，同时大幅降低了热量和脂肪含量。</p>
+                
+                <div class="ingredients">
+                    <h4>主要食材：</h4>
+                    <ul>
+                        <li>鸡胸肉（去皮去脂）</li>
+                        <li>花生米（减量）</li>
+                        <li>干辣椒</li>
+                        <li>黄瓜、胡萝卜</li>
+                        <li>少量食用油</li>
+                    </ul>
+                </div>
+                
+                <div class="cooking-method">
+                    <h4>烹饪方法：</h4>
+                    <ol>
+                        <li>鸡胸肉切丁，用蛋清和淀粉腌制</li>
+                        <li>不粘锅刷薄薄一层油，煸炒鸡肉</li>
+                        <li>无油空锅炒蔬菜和鸡肉</li>
+                        <li>加入调味料和少量花生米即可</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="calorie-comparison">
+        <div style="width: 45%;">
+            <h4>传统版宫保鸡丁 (197-268 大卡/100克)</h4>
+            <div class="calorie-bar traditional-bar">
+                <span class="calorie-label">100%</span>
+            </div>
+        </div>
+        <div style="width: 10%; text-align: center;">VS</div>
+        <div style="width: 45%;">
+            <h4>健康低卡版宫保鸡丁 (96-109 大卡/100克)</h4>
+            <div class="calorie-bar healthy-bar">
+                <span class="calorie-label">约40-50%</span>
+            </div>
+        </div>
+    </div>
+    
+    <h3>健康改良要点</h3>
+    <ul>
+        <li><strong>食材替换</strong>：使用鸡胸肉替代高脂鸡腿肉，去除皮和脂肪</li>
+        <li><strong>增加蔬菜</strong>：添加黄瓜、胡萝卜等蔬菜，增加膳食纤维和维生素</li>
+        <li><strong>减少油脂</strong>：使用不粘锅少油烹饪，采用"无油空气炒"技术</li>
+        <li><strong>调味改良</strong>：使用蜂蜜替代白糖，减少盐分和酱油用量</li>
+        <li><strong>控制配料</strong>：减少花生米用量，降低热量</li>
+    </ul>
+    
+    <h2>回锅肉对比</h2>
+    
+    <div class="comparison-container">
+        <div class="dish-card traditional">
+            <img src="../traditional_huiguorou.jpeg" alt="传统回锅肉" class="dish-image">
+            <div class="dish-info">
+                <h3 class="dish-title">传统回锅肉</h3>
+                <div class="calorie-badge">415 大卡/100克</div>
+                <p>传统回锅肉以五花肉为主料，配以蒜苗，经过猪油炒制而成。肥瘦相间，色泽红亮，肥而不腻，但热量和脂肪含量极高，是典型的高油高卡路里菜品。</p>
+                
+                <div class="ingredients">
+                    <h4>主要食材：</h4>
+                    <ul>
+                        <li>五花肉</li>
+                        <li>蒜苗</li>
+                        <li>郫县豆瓣</li>
+                        <li>猪油或大量食用油</li>
+                    </ul>
+                </div>
+                
+                <div class="cooking-method">
+                    <h4>烹饪方法：</h4>
+                    <ol>
+                        <li>五花肉煮熟切片</li>
+                        <li>猪油爆香豆瓣酱</li>
+                        <li>大火爆炒肉片至起"灯盏窝"</li>
+                        <li>加入调味料和蒜苗翻炒</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dish-card healthy">
+            <img src="../healthy_huiguorou.jpeg" alt="健康减脂版回锅肉" class="dish-image">
+            <div class="dish-info">
+                <h3 class="dish-title">健康减脂版回锅肉</h3>
+                <div class="calorie-badge">约200-250 大卡/100克</div>
+                <p>健康版回锅肉使用猪肩肉替代五花肉，增加了甜椒等蔬菜比例，减少油脂使用，采用焖煮结合的烹饪方式，保留了回锅肉的风味，同时大幅降低了热量和脂肪含量。</p>
+                
+                <div class="ingredients">
+                    <h4>主要食材：</h4>
+                    <ul>
+                        <li>猪肩肉（脂肪较少）</li>
+                        <li>蒜苗</li>
+                        <li>甜椒</li>
+                        <li>郫县豆瓣（控制用量）</li>
+                        <li>少量食用油</li>
+                    </ul>
+                </div>
+                
+                <div class="cooking-method">
+                    <h4>烹饪方法：</h4>
+                    <ol>
+                        <li>猪肩肉煮熟切片</li>
+                        <li>少油煸炒肉片</li>
+                        <li>加入调味料和蔬菜</li>
+                        <li>采用焖煮结合的方式完成烹饪</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="calorie-comparison">
+        <div style="width: 45%;">
+            <h4>传统回锅肉 (415 大卡/100克)</h4>
+            <div class="calorie-bar traditional-bar">
+                <span class="calorie-label">100%</span>
+            </div>
+        </div>
+        <div style="width: 10%; text-align: center;">VS</div>
+        <div style="width: 45%;">
+            <h4>健康减脂版回锅肉 (约200-250 大卡/100克)</h4>
+            <div class="calorie-bar healthy-bar">
+                <span class="calorie-label">约50-60%</span>
+            </div>
+        </div>
+    </div>
+    
+    <h3>健康改良要点</h3>
+    <ul>
+        <li><strong>肉类替换</strong>：使用猪肩肉(shoulder roast)替代高脂五花肉</li>
+        <li><strong>增加蔬菜</strong>：添加甜椒等蔬菜，增加营养和膳食纤维</li>
+        <li><strong>减少油脂</strong>：控制烹饪用油量，采用焖煮结合的方式减少油脂吸收</li>
+        <li><strong>调味控制</strong>：减少豆瓣酱和甜面酱的用量，控制盐分摄入</li>
+        <li><strong>烹饪技巧</strong>：采用中小火烹饪，避免高温大量用油</li>
+    </ul>
+    
+    <div class="tips-section">
+        <h3>健康烹饪通用技巧</h3>
+        <p>无论制作哪种中餐菜品，以下健康烹饪技巧都可以帮助降低热量和脂肪含量：</p>
+        <ul>
+            <li><strong>选择瘦肉</strong>：使用鸡胸肉、瘦猪肉、鱼肉等低脂肉类</li>
+            <li><strong>增加蔬菜比例</strong>：在菜品中添加更多蔬菜，增加体积和饱腹感</li>
+            <li><strong>改变烹饪方法</strong>：用蒸、煮、炖替代油炸、煎</li>
+            <li><strong>控制油脂使用</strong>：
+                <ul>
+                    <li>使用喷油瓶精确控制用油量</li>
+                    <li>选择不粘锅减少用油需求</li>
+                    <li>尝试"空气炒"技术（无油空锅）</li>
+                </ul>
+            </li>
+            <li><strong>调味改良</strong>：
+                <ul>
+                    <li>使用香草、香料增加风味，减少对盐的依赖</li>
+                    <li>用蜂蜜、水果替代白糖</li>
+                    <li>控制酱油、豆瓣酱等高钠调味品的用量</li>
+                </ul>
+            </li>
+            <li><strong>食材替代</strong>：
+                <ul>
+                    <li>用豆腐、蘑菇等替代部分肉类</li>
+                    <li>选择全谷物代替精制碳水化合物</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <h2>营养对比总结</h2>
+    
+    <table class="nutrition-table">
+        <tr>
+            <th>菜品</th>
+            <th>传统版热量(大卡/100g)</th>
+            <th>健康版热量(大卡/100g)</th>
+            <th>热量降低比例</th>
+            <th>传统版脂肪(g/100g)</th>
+            <th>健康版脂肪(g/100g)</th>
+            <th>脂肪降低比例</th>
+        </tr>
+        <tr>
+            <td>宫保鸡丁</td>
+            <td>197-268</td>
+            <td>96-109</td>
+            <td>约50-60%</td>
+            <td>约18.89</td>
+            <td>约5.69</td>
+            <td>约70%</td>
+        </tr>
+        <tr>
+            <td>回锅肉</td>
+            <td>415</td>
+            <td>约200-250</td>
+            <td>约40-50%</td>
+            <td>41.15</td>
+            <td>约15-20</td>
+            <td>约50-60%</td>
+        </tr>
+    </table>
+    
+    <div class="conclusion">
+        <h2>结论与建议</h2>
+        <p>通过对比可以看出，健康版中餐菜品在保留原有风味的同时，显著降低了热量和脂肪含量：</p>
+        <ul>
+            <li><strong>热量降低</strong>：健康版菜品比传统版本热量降低了40-60%</li>
+            <li><strong>脂肪减少</strong>：健康版菜品的脂肪含量减少了50-70%</li>
+            <li><strong>营养提升</strong>：通过增加蔬菜比例，提高了膳食纤维和维生素含量</li>
+        </ul>
+        
+        <p>对于想要享受美味中餐同时关注健康的人群，建议：</p>
+        <ol>
+            <li>尝试使用本文档中的健康替代菜谱</li>
+            <li>在家烹饪时采用健康烹饪技巧</li>
+            <li>在餐厅就餐时，可以要求少油、少盐烹饪</li>
+            <li>注意控制主食和肉类的摄入量，增加蔬菜比例</li>
+            <li>保持适量运动，配合健康饮食习惯</li>
+        </ol>
+        
+        <p>通过这些简单的改变，您可以在享受美味中餐的同时，维持健康的生活方式。</p>
+    </div>
+</body>
+</html>
